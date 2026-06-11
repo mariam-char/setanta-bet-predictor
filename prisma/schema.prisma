@@ -1,0 +1,145 @@
+// 2026 World Cup Predictor — PostgreSQL schema
+// Leaderboard-ready: scores are recomputed by a worker as real results land.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── Auth (NextAuth.js) ─────────────────────────────────────────────
+
+model User {
+  id            String       @id @default(cuid())
+  name          String?
+  email         String?      @unique
+  emailVerified DateTime?
+  image         String?
+  handle        String?      @unique // public display name on leaderboards
+  accounts      Account[]
+  sessions      Session[]
+  predictions   Prediction[]
+  events        AnalyticsEvent[]
+  promoEntries  PromoEntry[]
+  createdAt     DateTime     @default(now())
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ── Predictions ────────────────────────────────────────────────────
+
+model Prediction {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Ordered team ids (1st→4th) per group: { "A": ["MEX","KOR","RSA","CZE"], … }
+  groupRankings        Json
+  /// The 8 group letters whose third-placed team advances
+  qualifiedThirdGroups Json
+  /// Winner team id per official match number: { "73": "SUI", … }
+  matchWinners         Json
+
+  championTeamId String?
+  confidence     Int?     // 0–100 chalk↔chaos score at submit time
+  isComplete     Boolean  @default(false)
+  submittedAt    DateTime?
+
+  /// Points awarded as real results land (leaderboard)
+  score          Int      @default(0)
+  scoreBreakdown Json?    // per-round points for transparency
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId]) // one active prediction per user (relax for multi-entry pools)
+  @@index([score])
+  @@index([championTeamId])
+}
+
+// ── Real results (admin-entered or fed by a results worker) ────────
+
+model MatchResult {
+  matchNumber Int      @id // 1–104, official FIFA numbering
+  homeTeamId  String?
+  awayTeamId  String?
+  winnerTeamId String?
+  stage       String   // GROUP | R32 | R16 | QF | SF | TPP | F
+  decidedAt   DateTime?
+}
+
+// ── Promotions ─────────────────────────────────────────────────────
+
+/// "Guess a finalist, win 50 free spins" — entries are settled by a worker
+/// once the final is decided, crediting spins to the Setanta Bet account
+/// matching `contact`.
+model PromoEntry {
+  id             String   @id @default(cuid())
+  promoCode      String   @default("WC26_FINALIST_50SPINS")
+  /// Email or phone number the free spins are credited to
+  contact        String
+  contactType    String   // EMAIL | PHONE
+  /// The user's two predicted finalists
+  finalist1TeamId String
+  finalist2TeamId String
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  /// Set by the settlement worker after the championship ends
+  isWinner       Boolean?
+  settledAt      DateTime?
+  /// Submission date
+  submittedAt    DateTime @default(now())
+  createdAt      DateTime @default(now())
+
+  @@unique([promoCode, contact]) // one entry per contact per promo
+  @@index([finalist1TeamId])
+  @@index([finalist2TeamId])
+}
+
+// ── Analytics ──────────────────────────────────────────────────────
+
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name      String   // e.g. "group_completed", "bracket_generated", "share_clicked"
+  payload   Json?
+  createdAt DateTime @default(now())
+
+  @@index([name, createdAt])
+}
