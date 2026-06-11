@@ -106,13 +106,13 @@ model MatchResult {
 
 // ── Promotions ─────────────────────────────────────────────────────
 
-/// "Guess a finalist, win 50 free spins" — entries are settled by a worker
-/// once the final is decided, crediting spins to the Setanta Bet account
+/// "Guess a finalist, win 50 Setanta Coins" — entries are settled by a worker
+/// once the final is decided, crediting coins to the Setanta Bet account
 /// matching `contact`.
 model PromoEntry {
   id             String   @id @default(cuid())
-  promoCode      String   @default("WC26_FINALIST_50SPINS")
-  /// Email or phone number the free spins are credited to
+  promoCode      String   @default("WC26_FINALIST_50COINS")
+  /// Email or phone number the Setanta Coins are credited to
   contact        String
   contactType    String   // EMAIL | PHONE
   /// The user's two predicted finalists
