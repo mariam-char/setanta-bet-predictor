@@ -2,7 +2,8 @@
 // Leaderboard-ready: scores are recomputed by a worker as real results land.
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
