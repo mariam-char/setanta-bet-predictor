@@ -5,7 +5,7 @@ import { AchievementToast } from "@/components/AchievementToast";
 export const metadata: Metadata = {
   title: "WorldCup2026 Bracket Predictor",
   description:
-    "Build your World Cup 2026 prediction with the Setanta Bet predictor — rank all 12 groups, call every knockout match and crown your champion. Guess a finalist, win 50 free spins.",
+    "Build your World Cup 2026 prediction with the Setanta Bet predictor — rank all 12 groups, call every knockout match and crown your champion. Guess a finalist, win 50 Setanta Coins.",
 };
 
 export default function PredictLayout({

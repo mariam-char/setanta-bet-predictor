@@ -5,7 +5,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { TEAMS_BY_ID } from "@/lib/teams";
 
-const PROMO_CODE = "WC26_FINALIST_50SPINS";
+const PROMO_CODE = "WC26_FINALIST_50COINS";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_RE = /^\+?[\d\s().-]{7,20}$/;

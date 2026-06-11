@@ -16,11 +16,11 @@ const body = Inter({
 export const metadata: Metadata = {
   title: {
     default:
-      "Setanta Bet World Cup 2026 Predictor — Guess the Finalists, Win 50 Free Spins",
+      "Setanta Bet World Cup 2026 Predictor — Guess the Finalists, Win 50 Setanta Coins",
     template: "%s | Setanta Bet World Cup 2026 Predictor",
   },
   description:
-    "The official Setanta Bet World Cup 2026 bracket predictor. Predict every group, every knockout and the champion of WorldCup2026 — guess a finalist and win 50 free spins on Setanta Bet. 48 teams. 104 matches. Stay in the game.",
+    "The official Setanta Bet World Cup 2026 bracket predictor. Predict every group, every knockout and the champion of WorldCup2026 — guess a finalist and win 50 Setanta Coins on Setanta Bet. 48 teams. 104 matches. Stay in the game.",
   keywords: [
     "Setanta",
     "Setanta Bet",
@@ -34,9 +34,9 @@ export const metadata: Metadata = {
     "World Cup predictor",
     "bracket predictor",
     "World Cup bracket",
-    "free spin",
-    "free spins",
-    "freespin",
+    "Setanta Coin",
+    "Setanta Coins",
+    "SetantaCoin",
     "football predictions",
   ],
   applicationName: "Setanta Bet World Cup 2026 Predictor",
@@ -48,17 +48,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Setanta Bet World Cup 2026 Predictor",
-    title: "Setanta Bet World Cup 2026 Predictor — Win 50 Free Spins",
+    title: "Setanta Bet World Cup 2026 Predictor — Win 50 Setanta Coins",
     description:
-      "Predict the entire WorldCup2026 bracket with the Setanta Bet predictor. Guess a finalist right and collect 50 free spins after the championship ends. 48 teams. 104 matches. One champion.",
+      "Predict the entire WorldCup2026 bracket with the Setanta Bet predictor. Guess a finalist right and collect 50 Setanta Coins after the championship ends. 48 teams. 104 matches. One champion.",
     locale: "en_US",
     alternateLocale: ["ka_GE"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Setanta Bet World Cup 2026 Predictor — Win 50 Free Spins",
+    title: "Setanta Bet World Cup 2026 Predictor — Win 50 Setanta Coins",
     description:
-      "Predict the full WorldCup2026 bracket. Guess a finalist, win 50 free spins on Setanta Bet.",
+      "Predict the full WorldCup2026 bracket. Guess a finalist, win 50 Setanta Coins on Setanta Bet.",
   },
 };
 
@@ -72,12 +72,12 @@ const jsonLd = {
   operatingSystem: "Web",
   inLanguage: ["en", "ka"],
   description:
-    "Free World Cup 2026 bracket predictor by Setanta Bet. Predict groups, knockouts and the champion — guess a finalist and win 50 free spins.",
+    "Free World Cup 2026 bracket predictor by Setanta Bet. Predict groups, knockouts and the champion — guess a finalist and win 50 Setanta Coins.",
   keywords:
-    "Setanta, Setanta-Bet, WorldCup, predictor, WorldCup2026, freespin, free spins, World Cup 2026 bracket",
+    "Setanta, Setanta-Bet, WorldCup, predictor, WorldCup2026, Setanta Coin, Setanta Coins, World Cup 2026 bracket",
   offers: {
     "@type": "Offer",
-    name: "Guess a finalist — 50 free spins on Setanta Bet",
+    name: "Guess a finalist — 50 Setanta Coins on Setanta Bet",
     price: "0",
     priceCurrency: "USD",
   },
